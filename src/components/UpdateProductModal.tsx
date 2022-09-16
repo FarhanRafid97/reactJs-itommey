@@ -63,6 +63,7 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ data }) => {
                 />
                 <input
                   type="file"
+                  value={product.picture}
                   onChange={(e) => {
                     e.preventDefault();
                     const reader = new FileReader();
@@ -98,6 +99,15 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ data }) => {
                     setProduct({ ...product, expiredAt: e.target.value })
                   }
                 />
+                <Flex columnGap="15px">
+                  <label htmlFor="isActive">Is Active</label>
+                  <input
+                    id="isActive"
+                    placeholder="Basic usage"
+                    type="checkbox"
+                    checked={data.isActive}
+                  />
+                </Flex>
               </Flex>
               <Button mt={4} w="full" colorScheme="telegram" type="submit">
                 Submit

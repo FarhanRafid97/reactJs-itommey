@@ -10,6 +10,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
@@ -20,6 +21,7 @@ import { InputProductType } from '../store/types/product';
 interface AddProductModalProps {}
 
 const AddProductModal: React.FC<AddProductModalProps> = () => {
+  const toast = useToast();
   const disptach = useAppDispatch();
   const [product, setProduct] = useState<InputProductType>({
     expiredAt: '',
@@ -27,11 +29,18 @@ const AddProductModal: React.FC<AddProductModalProps> = () => {
     picture: '',
     qty: 0,
   });
-  console.log(product);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     disptach(addProductAction(product));
+    setProduct({ expiredAt: '', name: '', picture: '', qty: 0 });
+    toast({
+      title: 'Product Added!!',
+      status: 'success',
+      position: 'top',
+      duration: 4000,
+      isClosable: true,
+    });
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -58,6 +67,7 @@ const AddProductModal: React.FC<AddProductModalProps> = () => {
                 />
                 <input
                   type="file"
+                  value={product.picture}
                   onChange={(e) => {
                     e.preventDefault();
                     const reader = new FileReader();

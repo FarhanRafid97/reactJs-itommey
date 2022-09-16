@@ -1,6 +1,6 @@
 export interface InputProductType {
   name: string;
   qty: number;
-  picture: string | File;
+  picture: string;
   expiredAt: string;
 }

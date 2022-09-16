@@ -7,6 +7,7 @@ import {
   AlertDialogOverlay,
   Button,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { deleteProductAction } from '../store/actions/productAction';
@@ -16,6 +17,7 @@ interface DeleteModalProps {
 }
 
 const DeleteModal: React.FC<DeleteModalProps> = ({ id }) => {
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
   const dispatch = useAppDispatch();
@@ -49,6 +51,13 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ id }) => {
                 onClick={() => {
                   dispatch(deleteProductAction(id));
                   onClose();
+                  toast({
+                    title: 'Product Deleted',
+                    status: 'error',
+                    position: 'top',
+                    duration: 9000,
+                    isClosable: true,
+                  });
                 }}
                 ml={3}
               >
