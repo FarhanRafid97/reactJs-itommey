@@ -1,6 +1,8 @@
+import { AddIcon, PlusSquareIcon } from '@chakra-ui/icons';
 import {
   Button,
   Flex,
+  Image,
   Input,
   Modal,
   ModalBody,
@@ -10,25 +12,22 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  useToast,
-  Image,
 } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
-import { PlusSquareIcon } from '@chakra-ui/icons';
-import { AddIcon } from '@chakra-ui/icons';
 import { addProductAction } from '../store/actions/productAction';
 import { useAppDispatch } from '../store/hooks/hook';
-import { InputProductType } from '../store/types/product';
+import { AddInputProductType } from '../store/types/product';
 
-interface AddProductModalProps {}
+interface AddProductModalProps {
+  loading: boolean;
+}
 
-const AddProductModal: React.FC<AddProductModalProps> = () => {
+const AddProductModal: React.FC<AddProductModalProps> = ({ loading }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const toast = useToast();
   const disptach = useAppDispatch();
 
   const [imageSrc, setImageSrc] = useState('');
-  const [product, setProduct] = useState<InputProductType>({
+  const [product, setProduct] = useState<AddInputProductType>({
     expiredAt: '',
     name: '',
     picture: '',
@@ -37,16 +36,10 @@ const AddProductModal: React.FC<AddProductModalProps> = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    disptach(addProductAction(product));
+    const test = disptach(addProductAction(product));
+    console.log('test console.log', test);
     setProduct({ expiredAt: '', name: '', picture: '', qty: 0 });
     setImageSrc('');
-    toast({
-      title: 'Product Added!!',
-      status: 'success',
-      position: 'top',
-      duration: 4000,
-      isClosable: true,
-    });
   };
 
   const uploadFIle: any = useRef(null);
@@ -128,7 +121,13 @@ const AddProductModal: React.FC<AddProductModalProps> = () => {
                   }}
                 />
               </Flex>
-              <Button mt={4} w="full" colorScheme="telegram" type="submit">
+              <Button
+                mt={4}
+                w="full"
+                colorScheme="telegram"
+                isLoading={loading}
+                type="submit"
+              >
                 Submit
               </Button>
             </form>

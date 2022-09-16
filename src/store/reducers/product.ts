@@ -1,29 +1,85 @@
 import { Action } from '../types/action';
-import { ActionType } from '../types/actionType';
+import { ActionType, ErrorType } from '../types/actionType';
 
-export interface ProductType {
-  id: number;
-  name: string;
-  qty: number;
-  picture: string;
-  isActive?: boolean;
-  expiredAt: string;
-  createdAt?: string;
-  updatedAt?: string;
+export interface ProductStateType {
+  toast: string;
+  loading: boolean;
+  error: string;
+  data: {
+    id: number;
+    name: string;
+    qty: number;
+    picture: string;
+    isActive: boolean;
+    expiredAt: string;
+    createdAt: string;
+    updatedAt: string;
+  }[];
 }
 
-const productReducers = (state: ProductType[] = [], action: Action) => {
+const productReducers = (
+  state: ProductStateType = {
+    toast: 'TOAST_NONE',
+    loading: false,
+    error: '',
+    data: [],
+  },
+  action: Action
+): ProductStateType => {
   switch (action.type) {
+    case 'LOADING_STATE':
+      return {
+        toast: '',
+        loading: true,
+        error: '',
+        data: state.data,
+      };
     case ActionType.GET_PRODUCT:
-      return action.payload;
+      return {
+        toast: action.payload.toast,
+        loading: action.payload.loading,
+        error: action.payload.error,
+        data: action.payload.data,
+      };
+
     case ActionType.ADD_PRODUCT:
-      return [...state, action.payload];
+      return {
+        toast: action.payload.toast,
+        loading: action.payload.loading,
+        error: action.payload.error,
+        data: [...state.data, action.payload.data],
+      };
+
     case ActionType.UPDATE_PRODUCT:
-      return state.map((data) =>
-        data.id === action.payload.id ? action.payload : data
+      const updatedData = state.data.map((data) =>
+        data.id === action.payload.data.id ? action.payload.data : data
       );
+      return {
+        toast: action.payload.toast,
+        loading: action.payload.loading,
+        error: action.payload.error,
+        data: updatedData,
+      };
+
     case ActionType.DELETE_PRODUCT:
-      return state.filter((data) => data.id !== action.payload.id);
+      const notDeletedData = state.data.filter(
+        (data) => data.id !== action.payload.data.id
+      );
+      return {
+        toast: action.payload.toast,
+        loading: action.payload.loading,
+        error: action.payload.error,
+        data: notDeletedData,
+      };
+
+    case ErrorType.FAILED_ACTION:
+      return {
+        toast: action.payload.toast,
+        loading: action.payload.loading,
+        error: action.payload.error,
+        data: state.data,
+      };
+
     default:
       return state;
   }

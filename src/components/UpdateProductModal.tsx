@@ -11,31 +11,28 @@ import {
   ModalOverlay,
   useDisclosure,
   Image,
-  useToast,
 } from '@chakra-ui/react';
 import { PlusSquareIcon } from '@chakra-ui/icons';
 import { EditIcon } from '@chakra-ui/icons';
 import { useRef, useState } from 'react';
 import { updateProductAction } from '../store/actions/productAction';
 import { useAppDispatch } from '../store/hooks/hook';
-import { ProductType } from '../store/reducers/product';
+import { ProductType, UpdateInputProductType } from '../store/types/product';
 
 interface UpdateProductModalProps {
   data: ProductType;
+  loading: boolean;
 }
 
-export type UpdateInputType = Pick<
-  ProductType,
-  'id' | 'name' | 'picture' | 'qty' | 'expiredAt'
->;
-
-const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ data }) => {
+const UpdateProductModal: React.FC<UpdateProductModalProps> = ({
+  data,
+  loading,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const disptach = useAppDispatch();
-  const toast = useToast();
 
   const [imageSrc, setImageSrc] = useState(data.picture);
-  const [product, setProduct] = useState<UpdateInputType>({
+  const [product, setProduct] = useState<UpdateInputProductType>({
     id: data.id,
     name: data.name,
     picture: data.picture,
@@ -46,13 +43,6 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ data }) => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     disptach(updateProductAction(product));
-    toast({
-      title: 'Product Updated!!',
-      status: 'info',
-      position: 'top',
-      duration: 4000,
-      isClosable: true,
-    });
   };
 
   const uploadFIle: any = useRef(null);
@@ -78,6 +68,7 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ data }) => {
             <form onSubmit={onSubmit}>
               <Flex direction="column" rowGap="15px">
                 <Input
+                  required
                   placeholder="Basic usage"
                   value={product.name}
                   onChange={(e) =>
@@ -86,6 +77,7 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ data }) => {
                 />
 
                 <Input
+                  required
                   placeholder="Basic usage"
                   type="number"
                   value={product.qty}
@@ -94,6 +86,7 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ data }) => {
                   }
                 />
                 <Input
+                  required
                   placeholder="Basic usage"
                   type="date"
                   value={product.expiredAt}
@@ -142,7 +135,13 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ data }) => {
                   />
                 </Flex>
               </Flex>
-              <Button mt={4} w="full" colorScheme="whatsapp" type="submit">
+              <Button
+                mt={4}
+                w="full"
+                colorScheme="whatsapp"
+                isLoading={loading}
+                type="submit"
+              >
                 Submit
               </Button>
             </form>
