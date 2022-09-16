@@ -1,4 +1,4 @@
-import { Text, Box, Flex, Image } from '@chakra-ui/react';
+import { Heading, Box, Flex, Image } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import AddProductModal from './components/AddProductModal';
@@ -57,16 +57,21 @@ function App() {
     },
   ];
 
-  const data = products;
+  const data: [] = products;
 
   return (
     <Box className="App" w="full" m="auto" mt={4}>
       <Box w={['80%', '80%', '80%', '90%']} m="auto" py={12}>
-        <Flex justifyContent="space-between">
-          <Text>List Product</Text>
+        <Flex justifyContent="space-between" mb={4}>
+          <Heading>List Product</Heading>
           <AddProductModal />
         </Flex>
-        <DataTable columns={columns as any} data={data} pagination />
+        <DataTable
+          columns={columns as any}
+          data={data}
+          pagination
+          progressPending={data.length === 0}
+        />
       </Box>
     </Box>
   );

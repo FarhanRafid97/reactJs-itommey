@@ -10,6 +10,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
+import { DeleteIcon } from '@chakra-ui/icons';
 import { deleteProductAction } from '../store/actions/productAction';
 import { useAppDispatch } from '../store/hooks/hook';
 interface DeleteModalProps {
@@ -17,14 +18,15 @@ interface DeleteModalProps {
 }
 
 const DeleteModal: React.FC<DeleteModalProps> = ({ id }) => {
-  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
   const cancelRef = useRef();
   const dispatch = useAppDispatch();
+
   return (
     <>
       <Button colorScheme="red" onClick={onOpen}>
-        Delete
+        <DeleteIcon />
       </Button>
 
       <AlertDialog
@@ -38,8 +40,8 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ id }) => {
               Delete Product
             </AlertDialogHeader>
 
-            <AlertDialogBody>
-              Are you sure? You can't undo this action afterwards.
+            <AlertDialogBody color="red.500">
+              Are you sure To Delete This Product?.
             </AlertDialogBody>
 
             <AlertDialogFooter>

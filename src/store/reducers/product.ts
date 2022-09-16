@@ -15,7 +15,6 @@ export interface ProductType {
 const productReducers = (state: ProductType[] = [], action: Action) => {
   switch (action.type) {
     case ActionType.GET_PRODUCT:
-      console.log(action.payload);
       return action.payload;
     case ActionType.ADD_PRODUCT:
       return [...state, action.payload];

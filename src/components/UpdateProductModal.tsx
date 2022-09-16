@@ -10,8 +10,12 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  Image,
+  useToast,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { PlusSquareIcon } from '@chakra-ui/icons';
+import { EditIcon } from '@chakra-ui/icons';
+import { useRef, useState } from 'react';
 import { updateProductAction } from '../store/actions/productAction';
 import { useAppDispatch } from '../store/hooks/hook';
 import { ProductType } from '../store/reducers/product';
@@ -24,8 +28,13 @@ export type UpdateInputType = Pick<
   ProductType,
   'id' | 'name' | 'picture' | 'qty' | 'expiredAt'
 >;
+
 const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ data }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const disptach = useAppDispatch();
+  const toast = useToast();
+
+  const [imageSrc, setImageSrc] = useState(data.picture);
   const [product, setProduct] = useState<UpdateInputType>({
     id: data.id,
     name: data.name,
@@ -37,19 +46,33 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ data }) => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     disptach(updateProductAction(product));
+    toast({
+      title: 'Product Updated!!',
+      status: 'info',
+      position: 'top',
+      duration: 4000,
+      isClosable: true,
+    });
   };
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const uploadFIle: any = useRef(null);
+  const onBtnClick = () => {
+    if (!uploadFIle.current) {
+      return;
+    }
+    uploadFIle.current.click();
+  };
+
   return (
     <>
       <Button colorScheme="telegram" onClick={onOpen}>
-        Edit
+        <EditIcon />
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Edit Product</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <form onSubmit={onSubmit}>
@@ -61,28 +84,7 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ data }) => {
                     setProduct({ ...product, name: e.target.value })
                   }
                 />
-                <input
-                  type="file"
-                  value={product.picture}
-                  onChange={(e) => {
-                    e.preventDefault();
-                    const reader = new FileReader();
-                    if (!e.target.files) {
-                      return setProduct({ ...product, picture: '' });
-                    }
-                    const file = e.target.files[0];
 
-                    if (reader !== undefined && file !== undefined) {
-                      reader.readAsDataURL(file);
-                      reader.onloadend = (e) => {
-                        setProduct({
-                          ...product,
-                          picture: reader.result as string,
-                        });
-                      };
-                    }
-                  }}
-                />
                 <Input
                   placeholder="Basic usage"
                   type="number"
@@ -99,17 +101,48 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ data }) => {
                     setProduct({ ...product, expiredAt: e.target.value })
                   }
                 />
+
+                <Button onClick={onBtnClick} colorScheme="telegram">
+                  <PlusSquareIcon mr="5px" /> Upload Image
+                </Button>
+                {imageSrc && <Image src={imageSrc} w="50px" h="50px" />}
+                <input
+                  ref={uploadFIle}
+                  style={{ display: 'none' }}
+                  type="file"
+                  id="inputImage"
+                  onChange={(e) => {
+                    e.preventDefault();
+                    const reader = new FileReader();
+                    if (!e.target.files) {
+                      return setProduct({ ...product, picture: '' });
+                    }
+                    const file = e.target.files[0];
+
+                    if (reader !== undefined && file !== undefined) {
+                      reader.readAsDataURL(file);
+                      reader.onloadend = (e) => {
+                        setProduct({
+                          ...product,
+                          picture: reader.result as string,
+                        });
+                        setImageSrc(reader.result as string);
+                      };
+                    }
+                  }}
+                />
                 <Flex columnGap="15px">
-                  <label htmlFor="isActive">Is Active</label>
+                  <label htmlFor="isActive">Product Active</label>
                   <input
                     id="isActive"
                     placeholder="Basic usage"
                     type="checkbox"
                     checked={data.isActive}
+                    readOnly={true}
                   />
                 </Flex>
               </Flex>
-              <Button mt={4} w="full" colorScheme="telegram" type="submit">
+              <Button mt={4} w="full" colorScheme="whatsapp" type="submit">
                 Submit
               </Button>
             </form>
