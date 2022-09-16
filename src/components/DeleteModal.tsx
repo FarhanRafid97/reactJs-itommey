@@ -12,6 +12,7 @@ import { useRef } from 'react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { deleteProductAction } from '../store/actions/productAction';
 import { useAppDispatch } from '../store/hooks/hook';
+
 interface DeleteModalProps {
   id: number;
 }

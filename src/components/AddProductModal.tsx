@@ -12,6 +12,8 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  FormLabel,
+  Box,
 } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
 import { addProductAction } from '../store/actions/productAction';
@@ -64,34 +66,45 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ loading }) => {
           <ModalBody>
             <form onSubmit={onSubmit}>
               <Flex direction="column" rowGap="15px">
-                <Input
-                  required
-                  placeholder="Basic usage"
-                  value={product.name}
-                  onChange={(e) =>
-                    setProduct({ ...product, name: e.target.value })
-                  }
-                />
+                <Box>
+                  <FormLabel htmlFor="Product Name">Product Name</FormLabel>
+                  <Input
+                    required
+                    id="Product Name"
+                    placeholder="Basic usage"
+                    value={product.name}
+                    onChange={(e) =>
+                      setProduct({ ...product, name: e.target.value })
+                    }
+                  />
+                </Box>
+                <Box>
+                  <FormLabel htmlFor="Quantity">Quantity</FormLabel>
+                  <Input
+                    required
+                    id="Quantity"
+                    placeholder="Basic usage"
+                    type="number"
+                    value={product.qty}
+                    onChange={(e) =>
+                      setProduct({ ...product, qty: Number(e.target.value) })
+                    }
+                  />
+                </Box>
+                <Box>
+                  <FormLabel htmlFor="Expired At">Expired At</FormLabel>
 
-                <Input
-                  required
-                  placeholder="Basic usage"
-                  type="number"
-                  value={product.qty}
-                  onChange={(e) =>
-                    setProduct({ ...product, qty: Number(e.target.value) })
-                  }
-                />
-                <Input
-                  required
-                  placeholder="Basic usage"
-                  type="date"
-                  value={product.expiredAt}
-                  onChange={(e) =>
-                    setProduct({ ...product, expiredAt: e.target.value })
-                  }
-                />
-
+                  <Input
+                    required
+                    id="Expired At"
+                    placeholder="Basic usage"
+                    type="date"
+                    value={product.expiredAt}
+                    onChange={(e) =>
+                      setProduct({ ...product, expiredAt: e.target.value })
+                    }
+                  />
+                </Box>
                 <Button onClick={onBtnClick}>
                   <PlusSquareIcon mr="5px" /> Upload Image
                 </Button>

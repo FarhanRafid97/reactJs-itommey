@@ -8,7 +8,7 @@ import { getProductAction } from './store/actions/productAction';
 import { useAppDispatch, useAppSelector } from './store/hooks/hook';
 import { ToastType } from './store/types/actionType';
 import { ProductType } from './store/types/product';
-
+import { format } from 'date-fns';
 function App() {
   const {
     data,
@@ -88,15 +88,21 @@ function App() {
     },
     {
       name: 'Expired at',
-      selector: (row: ProductType) => row.expiredAt,
+      selector: (row: ProductType) =>
+        format(new Date(row.expiredAt), 'yyyy-MM-dd'),
+      sortable: true,
     },
     {
       name: 'Created At',
-      selector: (row: ProductType) => row.createdAt,
+      selector: (row: ProductType) =>
+        format(new Date(row.createdAt as string), 'yyyy-MM-dd'),
+      sortable: true,
     },
     {
       name: 'Created At',
-      selector: (row: ProductType) => row.updatedAt,
+      selector: (row: ProductType) =>
+        format(new Date(row.updatedAt as string), 'yyyy-MM-dd'),
+      sortable: true,
     },
     {
       name: 'Action',

@@ -1,6 +1,6 @@
 import { AnyAction, combineReducers, Dispatch } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import productReducer, { ProductStateType } from './product';
+import productReducer from './product';
 
 const reducers = combineReducers({ products: productReducer });
 
