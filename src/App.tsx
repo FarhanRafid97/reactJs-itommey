@@ -87,6 +87,11 @@ function App() {
       ),
     },
     {
+      name: 'Quantity',
+      selector: (row: ProductType) => row.qty,
+      sortable: true,
+    },
+    {
       name: 'Expired at',
       selector: (row: ProductType) =>
         format(new Date(row.expiredAt), 'yyyy-MM-dd'),
@@ -99,7 +104,7 @@ function App() {
       sortable: true,
     },
     {
-      name: 'Created At',
+      name: 'Updated At',
       selector: (row: ProductType) =>
         format(new Date(row.updatedAt as string), 'yyyy-MM-dd'),
       sortable: true,
@@ -117,8 +122,14 @@ function App() {
 
   return (
     <Box className="App" w="full" m="auto" mt={4}>
-      <Box w={['80%', '80%', '80%', '90%']} m="auto" py={12}>
-        <Flex justifyContent="space-between" mb={4}>
+      <Box w="90%" m="auto" py={12}>
+        <Flex
+          justifyContent="space-between"
+          mb={4}
+          alignItems="center"
+          gap="15px"
+          direction={['column', 'row', 'row', 'row']}
+        >
           <Heading>List Product</Heading>
           <AddProductModal loading={loading} />
         </Flex>
