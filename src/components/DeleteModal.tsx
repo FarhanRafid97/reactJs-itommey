@@ -15,16 +15,21 @@ import { useAppDispatch } from '../store/hooks/hook';
 
 interface DeleteModalProps {
   id: number;
+  index: number;
 }
 
-const DeleteModal: React.FC<DeleteModalProps> = ({ id }) => {
+const DeleteModal: React.FC<DeleteModalProps> = ({ id, index }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
   const dispatch = useAppDispatch();
 
   return (
     <>
-      <Button colorScheme="red" onClick={onOpen}>
+      <Button
+        colorScheme="red"
+        className={`delete_button_index_${index}`}
+        onClick={onOpen}
+      >
         <DeleteIcon />
       </Button>
 
@@ -48,6 +53,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ id }) => {
                 Cancel
               </Button>
               <Button
+                className="delete_product_button"
                 colorScheme="red"
                 onClick={() => {
                   dispatch(deleteProductAction(id));

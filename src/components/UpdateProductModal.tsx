@@ -25,12 +25,15 @@ import { format } from 'date-fns';
 interface UpdateProductModalProps {
   data: ProductType;
   loading: boolean;
+  index: number;
 }
 
 const UpdateProductModal: React.FC<UpdateProductModalProps> = ({
   data,
   loading,
+  index,
 }) => {
+  console.log(index);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const disptach = useAppDispatch();
 
@@ -58,7 +61,11 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({
 
   return (
     <>
-      <Button colorScheme="telegram" onClick={onOpen}>
+      <Button
+        colorScheme="telegram"
+        className={`edit_button_index_${index}`}
+        onClick={onOpen}
+      >
         <EditIcon />
       </Button>
 
@@ -84,6 +91,7 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({
                   <FormLabel htmlFor="Product Name">Product Name</FormLabel>
 
                   <Input
+                    name="productName"
                     required
                     id="Product Name"
                     placeholder="Basic usage"
@@ -97,6 +105,7 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({
                   <FormLabel htmlFor="Quantity">Quantity</FormLabel>
 
                   <Input
+                    name="qty"
                     required
                     id="Quantity"
                     placeholder="Basic usage"
@@ -110,6 +119,7 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({
                 <Box>
                   <FormLabel htmlFor="Expired At">Expired At</FormLabel>
                   <Input
+                    name="expiredAt"
                     required
                     id="Expired At"
                     placeholder="Basic usage"
@@ -174,7 +184,12 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="red" mr={3} onClick={onClose}>
+            <Button
+              colorScheme="red"
+              className="close_update_product"
+              mr={3}
+              onClick={onClose}
+            >
               Close
             </Button>
           </ModalFooter>

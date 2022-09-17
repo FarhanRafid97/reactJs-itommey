@@ -54,7 +54,11 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ loading }) => {
 
   return (
     <>
-      <Button onClick={onOpen} colorScheme="whatsapp">
+      <Button
+        onClick={onOpen}
+        className="button_add_product"
+        colorScheme="whatsapp"
+      >
         New Product <AddIcon ml="10px" />
       </Button>
 
@@ -64,12 +68,13 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ loading }) => {
           <ModalHeader>Add Product</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <form onSubmit={onSubmit}>
+            <form id="formProduct" onSubmit={onSubmit}>
               <Flex direction="column" rowGap="15px">
                 <Box>
                   <FormLabel htmlFor="Product Name">Product Name</FormLabel>
                   <Input
                     required
+                    name="productName"
                     id="Product Name"
                     placeholder="Basic usage"
                     value={product.name}
@@ -83,6 +88,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ loading }) => {
                   <Input
                     required
                     id="Quantity"
+                    name="qty"
                     placeholder="Basic usage"
                     type="number"
                     value={product.qty}
@@ -96,6 +102,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ loading }) => {
 
                   <Input
                     required
+                    name="expiredAt"
                     id="Expired At"
                     placeholder="Basic usage"
                     type="date"
@@ -108,10 +115,17 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ loading }) => {
                 <Button onClick={onBtnClick}>
                   <PlusSquareIcon mr="5px" /> Upload Image
                 </Button>
-                {imageSrc && <Image src={imageSrc} w="50px" h="50px" />}
+                {imageSrc && (
+                  <Image
+                    className="showPictureInput"
+                    src={imageSrc}
+                    w="50px"
+                    h="50px"
+                  />
+                )}
                 <input
                   ref={uploadFIle}
-                  style={{ display: 'none' }}
+                  style={{ opacity: '0', width: '5px', height: '5px' }}
                   type="file"
                   onChange={(e) => {
                     e.preventDefault();
@@ -147,7 +161,12 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ loading }) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="red" mr={3} onClick={onClose}>
+            <Button
+              colorScheme="red"
+              className="close_add_product"
+              mr={3}
+              onClick={onClose}
+            >
               Close
             </Button>
           </ModalFooter>

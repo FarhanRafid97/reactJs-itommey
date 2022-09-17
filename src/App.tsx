@@ -45,7 +45,7 @@ function App() {
         return;
       case ToastType.TOAST_SUCCESS_DELETE:
         toast({
-          title: 'Product Deleted',
+          title: 'Product Deleted!!',
           status: 'error',
           position: 'top',
           duration: 9000,
@@ -111,10 +111,10 @@ function App() {
     },
     {
       name: 'Action',
-      cell: (row: ProductType) => (
+      cell: (row: ProductType, index: number) => (
         <Flex columnGap="15px">
-          <UpdateProductModal data={row} loading={loading} />
-          <DeleteModal id={row.id} />
+          <UpdateProductModal data={row} index={index} loading={loading} />
+          <DeleteModal id={row.id} index={index} />
         </Flex>
       ),
     },
