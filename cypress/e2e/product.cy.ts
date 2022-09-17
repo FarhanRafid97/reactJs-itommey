@@ -14,7 +14,7 @@ describe('Navigation', () => {
     cy.get('.close_add_product').click();
   });
 
-  it('should delete Product', () => {
+  it('should Update Product', () => {
     cy.visit('http://localhost:3000');
     cy.get('.edit_button_index_2').click();
     cy.get('input[name=productName]').clear().type('lifeboy updated');
@@ -22,7 +22,7 @@ describe('Navigation', () => {
     cy.get('.chakra-alert__title').should('have.text', 'Product Updated!!');
     cy.get('.close_update_product').click();
   });
-  it('should Update Product', () => {
+  it('should Delete Product', () => {
     cy.visit('http://localhost:3000');
     cy.get('.delete_button_index_2').click();
     cy.get('.delete_product_button').click();
