@@ -1,4 +1,5 @@
 import { ActionType, ErrorType, ToastType } from './actionType';
+import { ProductType } from './product';
 
 interface GetProductType {
   type: ActionType.GET_PRODUCT;
@@ -6,16 +7,7 @@ interface GetProductType {
     toast: ToastType.TOAST_NONE;
     loading: boolean;
     error: string;
-    data: {
-      id: number;
-      name: string;
-      qty: number;
-      picture: string;
-      isActive: boolean;
-      expiredAt: string;
-      createdAt: string;
-      updatedAt: string;
-    }[];
+    data: ProductType[];
   };
 }
 interface AddProductType {
@@ -24,16 +16,7 @@ interface AddProductType {
     toast: ToastType.TOAST_SUCCESS_ADD;
     loading: boolean;
     error: string;
-    data: {
-      id: number;
-      name: string;
-      qty: number;
-      picture: string;
-      isActive: boolean;
-      expiredAt: string;
-      createdAt: string;
-      updatedAt: string;
-    };
+    data: ProductType;
   };
 }
 interface UpdateProductType {
@@ -42,16 +25,7 @@ interface UpdateProductType {
     toast: ToastType.TOAST_SUCCESS_UPDATE;
     loading: boolean;
     error: string;
-    data: {
-      id: number;
-      name: string;
-      qty: number;
-      picture: string;
-      isActive: boolean;
-      expiredAt: string;
-      createdAt: string;
-      updatedAt: string;
-    };
+    data: ProductType;
   };
 }
 

@@ -3,10 +3,10 @@ export interface ProductType {
   name: string;
   qty: number;
   picture: string;
-  isActive?: boolean;
+  isActive: boolean;
   expiredAt: string;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export type AddInputProductType = Pick<

@@ -7,7 +7,7 @@ describe('Navigation', () => {
     cy.get('input[name=productName]').type('abcdef');
     cy.get('input[name=qty]').type('123');
     cy.get('input[name=expiredAt]').type('2009-12-12');
-    cy.get('input[type=file]').selectFile('cypress/fixtures/pokemon.svg.png');
+    cy.get('input[type=file]').selectFile('cypress/fixtures/rock.png');
     cy.get('.showPictureInput');
     cy.get('#formProduct').submit();
     cy.get('.chakra-alert__title').should('have.text', 'Product Added!!');

@@ -16,7 +16,6 @@ function App() {
     loading,
   } = useAppSelector((state) => state.products);
   const dispatch = useAppDispatch();
-  console.log(data);
   const toast = useToast();
 
   useEffect(() => {
@@ -92,7 +91,7 @@ function App() {
       sortable: true,
     },
     {
-      name: 'Expired at',
+      name: 'Expired At',
       selector: (row: ProductType) =>
         format(new Date(row.expiredAt), 'yyyy-MM-dd'),
       sortable: true,
