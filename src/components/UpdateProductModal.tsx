@@ -33,7 +33,6 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({
   loading,
   index,
 }) => {
-  console.log(index);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const disptach = useAppDispatch();
 

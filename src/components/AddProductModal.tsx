@@ -38,8 +38,8 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ loading }) => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const test = disptach(addProductAction(product));
-    console.log('test console.log', test);
+    disptach(addProductAction(product));
+
     setProduct({ expiredAt: '', name: '', picture: '', qty: 0 });
     setImageSrc('');
   };
